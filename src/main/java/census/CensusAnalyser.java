@@ -1,11 +1,9 @@
 package census;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.InputMismatchException;
 import java.util.Iterator;
 
 import com.opencsv.bean.CsvToBean;
@@ -15,8 +13,16 @@ public class CensusAnalyser {
 	public int loadCSVData(String csvFile) throws CensusAnalyserException, IOException {
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(csvFile));
-			Iterator<CSVStateCensus> censusIterator = this.getCSVFileIterator(reader, CSVStateCensus.class);
-			int countOfRecord = this.getCount(censusIterator);
+			CsvToBeanBuilder<CSVStateCensus> csvToBeanBuilder = new CsvToBeanBuilder<CSVStateCensus>(reader);
+			csvToBeanBuilder.withType(CSVStateCensus.class);
+			csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
+			CsvToBean<CSVStateCensus> csvToBean = csvToBeanBuilder.build();
+			Iterator<CSVStateCensus> censusIterator = csvToBean.iterator();
+			int countOfRecord = 0;
+			while (censusIterator.hasNext()) {
+				countOfRecord++;
+				CSVStateCensus censusData = censusIterator.next();
+			}
 			return countOfRecord;
 		} catch (RuntimeException e) {
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.INCORRECT_FILE);
@@ -28,8 +34,16 @@ public class CensusAnalyser {
 	public int loadIndianStateCode(String csvFile) throws IOException, CensusAnalyserException {
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(csvFile));
-			Iterator<CSVStateCode> censusIterator = this.getCSVFileIterator(reader, CSVStateCode.class);
-			int countOfRecord = this.getCount(censusIterator);
+			CsvToBeanBuilder<CSVStateCode> csvToBeanBuilder = new CsvToBeanBuilder<CSVStateCode>(reader);
+			csvToBeanBuilder.withType(CSVStateCode.class);
+			csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
+			CsvToBean<CSVStateCode> csvToBean = csvToBeanBuilder.build();
+			Iterator<CSVStateCode> censusIterator = csvToBean.iterator();
+			int countOfRecord = 0;
+			while (censusIterator.hasNext()) {
+				countOfRecord++;
+				CSVStateCode censusData = censusIterator.next();
+			}
 			return countOfRecord;
 		} catch (RuntimeException e) {
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.INCORRECT_FILE);
@@ -37,23 +51,5 @@ public class CensusAnalyser {
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.NO_FILE);
 		}
 	}
-	private <E> int getCount(Iterator<E> iterator) {
-		int countOfRecord = 0;
-		while (iterator.hasNext()) {
-			countOfRecord++;
-			E censusData = iterator.next();
-		}
-		return countOfRecord;
-	}
-	private <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvClass) throws CensusAnalyserException {
-		try {
-			CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder(reader);
-			csvToBeanBuilder.withType(csvClass);
-			csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-			CsvToBean<E> csvToBean = csvToBeanBuilder.build();
-			return csvToBean.iterator();
-		} catch (IllegalStateException e) {
-			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
-		}
-	}
 }
+	
