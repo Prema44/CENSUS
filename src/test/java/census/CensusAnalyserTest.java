@@ -23,7 +23,7 @@ public class CensusAnalyserTest {
 		int count = 0;
 		try {
 			count = analyser.loadCSVData(STATECENSUS_CSVFILE);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
 		}
 			System.out.println(count);
@@ -41,9 +41,9 @@ public class CensusAnalyserTest {
 		int count = 0;
 		try {
 			count = analyser.loadCSVData(WRONG_FILE);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
-			assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE, e.type);
+			assertEquals(CSVBuilderException.ExceptionType.INCORRECT_FILE, e.type);
 		}
 		
 	}
@@ -59,9 +59,9 @@ public class CensusAnalyserTest {
 		int count = 0;
 		try {
 			count = analyser.loadCSVData(WRONG_EXTENSION);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
-			assertEquals(CensusAnalyserException.ExceptionType.NO_FILE, e.type);
+			assertEquals(CSVBuilderException.ExceptionType.NO_FILE, e.type);
 		}
 	}
 
@@ -76,9 +76,9 @@ public class CensusAnalyserTest {
 		int count = 0;
 		try {
 			count = analyser.loadCSVData(STATECENSUS_CSVFILE);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
-			assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE, e.type);
+			assertEquals(CSVBuilderException.ExceptionType.INCORRECT_FILE, e.type);
 		}
 	}
 
@@ -93,9 +93,9 @@ public class CensusAnalyserTest {
 		int count = 0;
 		try {
 			count = analyser.loadCSVData(USCSVFILE);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
-			assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE, e.type);
+			assertEquals(CSVBuilderException.ExceptionType.INCORRECT_FILE, e.type);
 		}
 	}
 
@@ -109,7 +109,7 @@ public class CensusAnalyserTest {
 			int count = analyser.loadIndianStateCode(STATE_CODE_CSV);
 			System.out.println(count);
 			assertEquals(37, count);
-		} catch (CensusAnalyserException e) {}
+		} catch (CSVBuilderException e) {}
 	}
 	/**
 	 * UC2TestCase2
@@ -121,9 +121,9 @@ public class CensusAnalyserTest {
 		CensusAnalyser analyser = new CensusAnalyser();
 		try {
 			int count = analyser.loadIndianStateCode(WRONG_FILE);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
-			assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE, e.type);
+			assertEquals(CSVBuilderException.ExceptionType.INCORRECT_FILE, e.type);
 		}
 	}
 
@@ -137,9 +137,9 @@ public class CensusAnalyserTest {
 		CensusAnalyser analyser = new CensusAnalyser();
 		try {
 			int count = analyser.loadIndianStateCode(WRONG_EXTENSION);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
-			assertEquals(CensusAnalyserException.ExceptionType.NO_FILE, e.type);
+			assertEquals(CSVBuilderException.ExceptionType.NO_FILE, e.type);
 		}
 	}
 
@@ -153,9 +153,9 @@ public class CensusAnalyserTest {
 		CensusAnalyser analyser = new CensusAnalyser();
 		try {
 			int count = analyser.loadIndianStateCode(USCSVFILE);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
-			assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE, e.type);
+			assertEquals(CSVBuilderException.ExceptionType.INCORRECT_FILE, e.type);
 		}
 	}
 
@@ -169,9 +169,9 @@ public class CensusAnalyserTest {
 		CensusAnalyser analyser = new CensusAnalyser();
 		try {
 			int count = analyser.loadIndianStateCode(USCSVFILE);
-		} catch (CensusAnalyserException e) {
+		} catch (CSVBuilderException e) {
 			e.printStackTrace();
-			assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE, e.type);
+			assertEquals(CSVBuilderException.ExceptionType.INCORRECT_FILE, e.type);
 		}
 	}
 
