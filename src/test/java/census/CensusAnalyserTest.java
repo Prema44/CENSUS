@@ -12,7 +12,7 @@ public class CensusAnalyserTest {
 	private static final String WRONG_FILE = "H:\\bridgelab\\CensusAnalyser\\IndiaStateCode.csv";
 	private static final String WRONG_EXTENSION = "H:\\bridgelab\\CensusAnalyser\\IndiaStateCensusData.txt";
 	private static final String USCSVFILE = "H:\\bridgelab\\CensusAnalyser\\USCensusData.csv";
-	private static final String STATE_CODE_CSV = "C:\\Users\\adity\\eclipse-workspace\\Indian State Census\\IndiaStateCode.csv";
+	private static final String STATE_CODE_CSV = "H:\\bridgelab\\CensusAnalyser\\IndiaStateCode.csv";
 
 	/**
 	 * UC1TestCase1
@@ -210,7 +210,39 @@ public class CensusAnalyserTest {
 		CSVStateCensus[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
 		assertEquals("West Bengal", censusCSV[censusCSV.length - 1].state);
 	}
+	
+	/**
+	 * TestCase for UC4 Sorting StateCode CSV File data
+	 * 
+	 * @throws IOException
+	 * @throws CensusAnalyserException
+	 * @throws CSVBuilderException
+	 */
+	@Test
+	public void givenIndianCensusData_WhenSortedOnStateCode_ShouldReturnSortedResult()
+			    throws IOException, CensusAnalyserException, CSVBuilderException {
+		CensusAnalyser analyser = new CensusAnalyser();
+		analyser.loadIndianStateCode(STATE_CODE_CSV);
+		String sortedCensusData = analyser.getStateCodeWiseSortedCensusData();
+		CSVStateCode[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStateCode[].class);
+		assertEquals("Andhra Pradesh New", censusCSV[0].state);
+	}
 
-
+	/**
+	 * TestCase for UC4 Sorting StateCode CSV File data
+	 * 
+	 * @throws IOException
+	 * @throws CensusAnalyserException
+	 * @throws CSVBuilderException
+	 */
+	@Test
+	public void givenIndianCensusData_WhenSortedOnStateCode_ShouldReturnSortedResultForLastState()
+			    throws IOException, CensusAnalyserException, CSVBuilderException {
+		CensusAnalyser analyser = new CensusAnalyser();
+		analyser.loadIndianStateCode(STATE_CODE_CSV);
+		String sortedCensusData = analyser.getStateCodeWiseSortedCensusData();
+		CSVStateCode[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStateCode[].class);
+		assertEquals("West Bengal", censusCSV[censusCSV.length - 1].state);
+	}
 
 }
