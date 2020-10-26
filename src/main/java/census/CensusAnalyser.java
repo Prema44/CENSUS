@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import com.google.gson.Gson;
@@ -58,6 +59,18 @@ public class CensusAnalyser<E> {
 		String sortedStateCensusJson = new Gson().toJson(censusCSVList);
 		return sortedStateCensusJson;
 	}
+	
+	public String getPopulationWiseSortedCensusData() throws CensusAnalyserException {
+		if(censusCSVList == null || censusCSVList.size() == 0) {
+			throw new CensusAnalyserException("No Census Data", CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
+		}
+		Comparator<CSVStateCensus> censusComparator = Comparator.comparing(census -> census.population);
+		this.sort(censusCSVList, censusComparator);
+		Collections.reverse(censusCSVList);
+		String sortedStateCensusJson = new Gson().toJson(censusCSVList);
+		return sortedStateCensusJson;
+	}
+
 
 	private <E> void sort(List<E> censusList, Comparator<E> censusComparator) {
 		for (int i = 0; i < censusList.size(); i++) {
